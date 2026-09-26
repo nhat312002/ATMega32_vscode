@@ -74,12 +74,15 @@ if(AVR_ENABLE_LTO)
 endif()
 
 if(AVR_GCC_OBJCOPY)
+  set(AVR_BIN_OUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/bin")
+  file(MAKE_DIRECTORY "${AVR_BIN_OUT_DIR}")
+
   add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND "${AVR_GCC_OBJCOPY}" -O ihex -R .eeprom
-            $<TARGET_FILE:${PROJECT_NAME}> "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.hex"
+            $<TARGET_FILE:${PROJECT_NAME}> "${AVR_BIN_OUT_DIR}/${PROJECT_NAME}.hex"
     COMMAND "${AVR_GCC_OBJCOPY}" -O binary -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures
-            $<TARGET_FILE:${PROJECT_NAME}> "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.bin"
-    COMMENT "Generating ${PROJECT_NAME}.hex / ${PROJECT_NAME}.bin"
+            $<TARGET_FILE:${PROJECT_NAME}> "${AVR_BIN_OUT_DIR}/${PROJECT_NAME}.bin"
+    COMMENT "Generating ${PROJECT_NAME}.hex / ${PROJECT_NAME}.bin in ${AVR_BIN_OUT_DIR}"
     VERBATIM
   )
 endif()
@@ -100,7 +103,7 @@ if(AVR_DUDE)
   endif()
   add_custom_target(flash
     COMMAND "${AVR_DUDE}" -p ${AVR_PROGRAMMER} ${AVRDUDE_PORT_OPT}
-            -U flash:w:"${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}.hex":i
+            -U flash:w:"${AVR_BIN_OUT_DIR}/${PROJECT_NAME}.hex":i
     DEPENDS ${PROJECT_NAME}
     COMMENT "Flashing ${MCU} on ${AVR_PORT}"
     VERBATIM

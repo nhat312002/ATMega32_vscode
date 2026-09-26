@@ -8,7 +8,7 @@
   "configurePresets": [
     {
       "name": "atmega32",
-      "displayName": "ATmega32 - internal RC 8 MHz",
+      "displayName": "ATmega32 - RC 8 MHz",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/atmega32",
       "toolchainFile": "${sourceDir}/cmake/toolchain-avr.cmake",
