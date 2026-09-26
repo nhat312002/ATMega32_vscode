@@ -1,0 +1,27 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 21,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "atmega32",
+      "displayName": "ATmega32 - internal RC 8 MHz",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/atmega32",
+      "toolchainFile": "${sourceDir}/cmake/toolchain-avr.cmake",
+      "cacheVariables": {
+        "MCU": "atmega32",
+        "F_CPU": "8000000"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "atmega32",
+      "configurePreset": "atmega32"
+    }
+  ]
+}

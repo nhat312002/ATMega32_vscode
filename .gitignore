@@ -1,0 +1,16 @@
+build/
+out/
+.cache/
+*.elf
+*.hex
+*.bin
+*.map
+*.eep
+*.o
+*.d
+*.su
+*.lst
+*.lss
+.vscode/
+.idea/
+*.bak
