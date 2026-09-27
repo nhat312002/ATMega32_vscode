@@ -8,13 +8,13 @@
   "configurePresets": [
     {
       "name": "atmega32",
-      "displayName": "ATmega32 - RC 8 MHz",
+      "displayName": "ATmega32 - RC 1 MHz",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/atmega32",
       "toolchainFile": "${sourceDir}/cmake/toolchain-avr.cmake",
       "cacheVariables": {
         "MCU": "atmega32",
-        "F_CPU": "8000000"
+        "F_CPU": "1000000"
       }
     }
   ],
