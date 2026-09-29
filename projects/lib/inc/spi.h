@@ -1,6 +1,6 @@
 /*
  * Title : spi.h
- * Author : thanhtrung210502
+ * Author : nhatv
  * Creation Date : 26/09/2026 (DD/MM/YYYY)
  * ------- ---------- --------
  */
@@ -41,13 +41,12 @@ typedef struct SpiConfig
 } stSpiConfig;
 
 /*---------------------------- Export Function Declarations -----------------------------*/
-enStatus SPI_Init(stSpiConfig* spiConfig);
+enStatus SPI_Init(const stSpiConfig* spiConfig);
 enStatus SPI_Enable(bool enable);
-enStatus SPI_EnableInterrupt(bool interrupt);
 enStatus SPI_Transmit(const uint8_t* sendData, uint8_t* recvData, uint8_t len);
 enStatus SPI_Send(const uint8_t* sendData, uint8_t len);
 enStatus SPI_Receive(uint8_t* sendData, uint8_t len);
-enStatus SPI_IsTransmitComplete(void);
+enStatus SPI_Slave_Receive(uint8_t* recvData, uint8_t len);
 
 #ifdef __cplusplus
 }

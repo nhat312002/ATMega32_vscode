@@ -22,6 +22,9 @@ extern "C"
 
 #define ARRAY_SIZE(X) (sizeof(X) / sizeof(X[0]))
 
+#define SET_BIT(REG, BIT)   ((REG) |= (1 << (BIT)))
+#define CLEAR_BIT(REG, BIT) ((REG) &= ~(1 << (BIT)))
+
 /*---------------------- Type definitions (Typedef, enum, struct) -----------------------*/
 typedef struct
 {

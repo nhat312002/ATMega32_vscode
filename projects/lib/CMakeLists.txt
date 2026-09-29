@@ -4,6 +4,7 @@ project(library C ASM)
 add_library(library STATIC
   src/i2c.c
   src/spi.c
+  src/LCD_4.c
 )
 
 # Add the include paths of this library here

@@ -47,6 +47,7 @@ set(AVR_COMPILE_OPTIONS
   -fpack-struct
   -fshort-enums
   -fno-common
+  -Werror
 )
 set(AVR_LINK_OPTIONS
   -mmcu=${MCU}
@@ -93,8 +94,6 @@ function(avr_add_firmware target_name)
     add_custom_command(TARGET ${target_name} POST_BUILD
       COMMAND "${AVR_GCC_OBJCOPY}" -O ihex -R .eeprom
               $<TARGET_FILE:${target_name}> "${AVR_BIN_OUT_DIR}/${target_name}.hex"
-      COMMAND "${AVR_GCC_OBJCOPY}" -O binary -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures
-              $<TARGET_FILE:${target_name}> "${AVR_BIN_OUT_DIR}/${target_name}.bin"
       COMMENT "Generating ${target_name}.hex / ${target_name}.bin in ${AVR_BIN_OUT_DIR}"
       VERBATIM
     )
