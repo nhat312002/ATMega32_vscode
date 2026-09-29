@@ -46,7 +46,6 @@ enStatus SPI_Enable(bool enable);
 enStatus SPI_Transmit(const uint8_t* sendData, uint8_t* recvData, uint8_t len);
 enStatus SPI_Send(const uint8_t* sendData, uint8_t len);
 enStatus SPI_Receive(uint8_t* sendData, uint8_t len);
-enStatus SPI_Slave_Receive(uint8_t* recvData, uint8_t len);
 
 #ifdef __cplusplus
 }
