@@ -5,46 +5,43 @@
  * ------- ---------- --------
  */
 
-/*---------------------------------------------------- System Include ------------------*/
+/*----------------- ----------------------------------- System Include ------------------*/
 #include <avr/io.h>
 #include <stdio.h>
 #include <stddef.h>
 #include <util/delay.h>
-/*----------------------------------------------------- Local Include ------------------*/
+/*----------------- ------------------------------------ Local Include ------------------*/
 #include "i2c.h"
 #include "trace.h"
 
-/*---------------------------------------------- Private define constants ---------------*/
+/*--------------- ------------------------------ Private define constants ---------------*/
 
-/*---------------------------------------------------- Private macros ------------------*/
+/*----------------- ----------------------------------- Private macros ------------------*/
 
-/*---------------------------------------------- Private type definitions ---------------*/
+/*--------------- ------------------------------ Private type definitions ---------------*/
 
-/*--------------------------------------------------- Static variables -----------------*/
+/*----------------- ---------------------------------- Static variables -----------------*/
 
-/*----------------------------------- Private function prototypes declarations -----------*/
+/*----------- ---------------------- Private function prototypes declarations -----------*/
 static bool I2C_Wait(void);
-/*-------------------------------------------- Private functions definition --------------*/
+/*-------------- ---------------------------- Private functions definition --------------*/
 static bool I2C_Wait(void)
 {
     return (TWCR & (1 << TWINT)) ? true : false;
 }
 
-/*--------------------------------------------- Export functions definition --------------*/
+/*-------------- ----------------------------- Export functions definition --------------*/
 enStatus I2C_Start()
 {
     uint8_t status;
-    SET_BIT(TWCR, TWSTA);
-    SET_BIT(TWCR, TWINT);
+    TWCR = (1 << TWSTA) | (1 << TWEN) | (1 << TWINT);
     while (I2C_Wait() == false);
     status = TWSR & 0xF8;
-    trace_var(status);
     return (status == 0x08 || status == 0x10) ? eSUCCESS : eFAIL;
 }
 
 enStatus I2C_Stop(void)
 {
-    /* TWSTO and TWINT must be written simultaneously */
     TWCR = (1 << TWINT) | (1 << TWSTO) | (1 << TWEN);
     while (TWCR & (1 << TWSTO));
 
@@ -108,8 +105,7 @@ enStatus I2C_Write(uint8_t address, const uint8_t* data, uint16_t size)
     }
 
     /* Send address + write request */
-    trace_var(address);
-    TWDR = (address << 1) | 0;
+    TWDR = address << 1 | 0;
     SET_BIT(TWCR, TWINT);
     while (I2C_Wait() == false);
     uint8_t status = TWSR & 0xF8;
@@ -150,9 +146,7 @@ enStatus I2C_Read(uint8_t address, uint8_t* data, uint16_t size)
     {
         return eFAIL;
     }
-
-    /* Load TWDR first, then clear TWINT */
-    TWDR = (address << 1) | 1;
+    TWDR = address << 1 | 1;
     SET_BIT(TWCR, TWINT);
     while (I2C_Wait() == false);
     uint8_t status = TWSR & 0xF8;
@@ -171,7 +165,6 @@ enStatus I2C_Read(uint8_t address, uint8_t* data, uint16_t size)
         }
         else
         {
-            /* Clear TWEA to send NACK on the last byte */
             SET_BIT(TWCR, TWINT);
             CLEAR_BIT(TWCR, TWEA);
         }
