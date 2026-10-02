@@ -34,9 +34,9 @@ typedef struct I2cConfig
 
 /*---------------------------- Export Function Declarations -----------------------------*/
 enStatus I2C_Init(const stI2cConfig* i2cConfig);
-enStatus I2C_Enable(bool enable);
-enStatus I2C_Write(uint8_t address, const uint8_t* data, uint16_t size);
-enStatus I2C_Read(uint8_t address, uint8_t* data, uint16_t size);
+void     I2C_Enable(bool enable);
+enStatus I2C_Write(uint8_t address, const uint8_t* data, uint16_t size, uint16_t timeout);
+enStatus I2C_Read(uint8_t address, uint8_t* data, uint16_t size, uint16_t timeout);
 
 #ifdef __cplusplus
 }

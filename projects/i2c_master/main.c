@@ -76,7 +76,7 @@ int main(void)
     while (1)
     {
         uint8_t dataToSend[] = {0x00, 0x00, 0x55};
-        if (I2C_Write(SLAVE_ADDRESS, dataToSend, sizeof(dataToSend)) == eFAIL)
+        if (I2C_Write(SLAVE_ADDRESS, dataToSend, sizeof(dataToSend), 100) == eFAIL)
         {
             trace_error();
         }
@@ -86,7 +86,7 @@ int main(void)
         }
         _delay_ms(100);
 
-        if (I2C_Write(SLAVE_ADDRESS, dataToSend, 2) == eFAIL)
+        if (I2C_Write(SLAVE_ADDRESS, dataToSend, 2, 1000) == eFAIL)
         {
             trace_error();
         }
@@ -96,7 +96,7 @@ int main(void)
         }
 
         uint8_t rxData[2] = {0};
-        if (I2C_Read(SLAVE_ADDRESS, rxData, 1) == eFAIL)
+        if (I2C_Read(SLAVE_ADDRESS, rxData, 1, 1000) == eFAIL)
         {
             trace_error();
         }
