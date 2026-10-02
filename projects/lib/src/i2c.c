@@ -5,16 +5,16 @@
  * ------- ---------- --------
  */
 
-/*----------------- ----------------------------------- System Include ------------------*/
+/*----------------------------------- System Include -----------------------------------*/
 #include <avr/io.h>
 #include <stddef.h>
 #include <util/delay.h>
 
-/*----------------- ------------------------------------ Local Include ------------------*/
+/*------------------------------------ Local Include -----------------------------------*/
 #include "i2c.h"
 #include "trace.h"
 
-/*--------------- ------------------------------ Private define constants ---------------*/
+/*------------------------------ Private define constants ------------------------------*/
 #define I2C_STATUS_COMPLETE_START          0x08  // A START condition has been transmitted
 #define I2C_STATUS_COMPLETE_REPEATED_START 0x10  // A repeated START condition has been transmitted
 #define I2C_STATUS_TX_SLA_ACK              0x18  // SLA+W has been transmitted and ACK has been received
@@ -24,20 +24,20 @@
 #define I2C_STATUS_RX_DATA_NACK            0x58  // Data byte has been received, NACK has been returned
 #define I2C_TWBR_MAX                       255   // Maximum value for the TWI Bit Rate Register
 
-/*----------------- ----------------------------------- Private macros ------------------*/
+/*----------------------------------- Private macros -----------------------------------*/
 
-/*--------------- ------------------------------ Private type definitions ---------------*/
+/*------------------------------ Private type definitions ------------------------------*/
 
-/*----------------- ---------------------------------- Static variables -----------------*/
+/*--------------------------------- Static variables -----------------------------------*/
 
-/*----------- ---------------------- Private function prototypes declarations -----------*/
+/*---------------------- Private function prototypes declarations ----------------------*/
 static enStatus I2C_Wait(uint16_t timeout);
 static enStatus I2C_SendData(uint8_t data, uint8_t expectStatus, uint16_t timeout);
 static enStatus I2C_Start(uint16_t timeout);
 static enStatus I2C_Stop(uint16_t timeout);
 static uint8_t  I2C_GetStatus(void);
 
-/*-------------- ---------------------------- Private functions definition --------------*/
+/*---------------------------- Private functions definition ----------------------------*/
 static enStatus I2C_Wait(uint16_t timeout)
 {
     for (uint16_t i = 0; i < timeout; i++)
@@ -118,7 +118,7 @@ static uint8_t I2C_GetStatus(void)
     return (TWSR & 0xF8);
 }
 
-/*-------------- ----------------------------- Export functions definition --------------*/
+/*---------------------------- Export functions definition -----------------------------*/
 enStatus I2C_Init(const stI2cConfig* i2cConfig)
 {
     if (i2cConfig == NULL)

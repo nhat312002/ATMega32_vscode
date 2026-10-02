@@ -5,35 +5,35 @@
  * ------- ---------- --------
  */
 
-/*----------------- ----------------------------------- System Include ------------------*/
+/*----------------------------------- System Include -----------------------------------*/
 #include <avr/io.h>
 #include <stddef.h>
 
-/*----------------- ------------------------------------ Local Include ------------------*/
+/*------------------------------------ Local Include -----------------------------------*/
 #include "spi.h"
 
-/*--------------- ------------------------------ Private define constants ---------------*/
+/*------------------------------ Private define constants ------------------------------*/
 #define MISO 6
 #define MOSI 5
 #define SS   4
 #define SCK  7
 
-/*----------------- ----------------------------------- Private macros ------------------*/
+/*----------------------------------- Private macros -----------------------------------*/
 
-/*--------------- ------------------------------ Private type definitions ---------------*/
+/*------------------------------ Private type definitions ------------------------------*/
 
-/*----------------- ---------------------------------- Static variables -----------------*/
+/*--------------------------------- Static variables -----------------------------------*/
 
-/*----------- ---------------------- Private function prototypes declarations -----------*/
+/*---------------------- Private function prototypes declarations ----------------------*/
 static bool SPI_IsTransmitComplete(void);
 
-/*-------------- ---------------------------- Private functions definition --------------*/
+/*---------------------------- Private functions definition ----------------------------*/
 static bool SPI_IsTransmitComplete(void)
 {
     return SPSR & (1 << SPIF);
 }
 
-/*-------------- ----------------------------- Export functions definition --------------*/
+/*---------------------------- Export functions definition -----------------------------*/
 enStatus SPI_Init(const stSpiConfig* spiConfig)
 {
     if (spiConfig->mode == eSPI_MASTER)
